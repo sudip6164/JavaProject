@@ -1,0 +1,296 @@
+<div th:fragment="navbar">
+<header id="header">
+		<!--header-->
+		<div class="header_top">
+			<!--header_top-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-6">
+						<div class="contactinfo">
+							<ul class="nav nav-pills">
+								<li><a href="#"><i class="fa fa-phone"></i> +977
+										98********</a></li>
+								<li><a href="#"><i class="fa fa-envelope"></i>
+										info@website.com</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="social-icons pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/header_top-->
+
+		<div class="header-middle">
+			<!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="/images/home/logo.png" alt="" /></a>
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+
+
+								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i>
+										Checkout</a></li>
+								<li><a href="/cart"><i class="fa fa-shopping-cart"></i>
+										Cart</a></li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									data-toggle="dropdown"> <i class="fa fa-user"></i> <span
+										th:if="${loggedIn}" th:text="${fullname}"></span> <span
+										th:if="${#strings.isEmpty(loggedIn) or not loggedIn}">Account</span>
+										<b class="caret"></b>
+								</a>
+									<ul class="dropdown-menu">
+										<li th:if="${#strings.isEmpty(loggedIn) or not loggedIn}"><a
+											href="#" data-toggle="modal" data-target="#loginModal"><i
+												class="fa fa-lock"></i> Login</a></li>
+										<li th:if="${#strings.isEmpty(loggedIn) or not loggedIn}"><a
+											href="#" data-toggle="modal" data-target="#signupModal"><i
+												class="fa fa-pencil-square-o"></i> Signup</a></li>
+										<li th:if="${loggedIn}"><a href="#"><i
+												class="fa fa-user"></i> Profile</a></li>
+										<li th:if="${loggedIn}"><a href="#"><i
+												class="fa fa-cog"></i> Settings</a></li>
+										<li th:if="${loggedIn}"><a href="/logout"><i
+												class="fa fa-sign-out"></i> Logout</a></li>
+									</ul></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/header-middle-->
+
+		<!-- Login Modal -->
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog"
+			aria-labelledby="loginModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title" id="loginModalLabel">Login into your
+							account</h5>
+
+					</div>
+					<div class="modal-body">
+						<!-- Login Form -->
+						<form method="post" action="postlogin">
+							<!-- Your login form content here -->
+							<div class="form-group">
+								<label for="loginEmail">Email address</label> <input
+									type="email" class="form-control" id="loginEmail"
+									placeholder="Enter email" name="email" required>
+							</div>
+							<div class="form-group">
+								<label for="loginPassword">Password</label> <input
+									type="password" class="form-control" id="loginPassword"
+									placeholder="Password" name="password" required
+									> <i
+									class="toggle-password fa fa-eye-slash"
+									onclick="togglePasswordVisibility()"></i>
+							</div>
+							<button type="submit" class="btn btn-primary">Login</button>
+						</form>
+						<br>
+						<div class="text-center mt-3">
+							<p>
+								Don't have an account? <a id="signupLink" href="#"
+									data-dismiss="modal" data-toggle="modal"
+									data-target="#signupModal">Register here</a>
+							</p>
+							<p>
+								Forgot your password? <a href="#">Reset here</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Signup Modal -->
+		<div class="modal fade" id="signupModal" tabindex="-1" role="dialog"
+			aria-labelledby="signupModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h5 class="modal-title" id="signupModalLabel">Create an
+							account</h5>
+					</div>
+					<div class="modal-body">
+						<!-- Signup Form -->
+						<form method="post" action="register" id="signupForm">
+							<!-- Your signup form content here -->
+							<div class="form-group">
+								<label for="signupFullName">Full Name</label> <input type="text"
+									class="form-control" id="signupFullName"
+									placeholder="Enter full name" name="fullname" required>
+							</div>
+							<div class="form-group">
+								<label for="signupFullName">Phone Number</label> <input
+									type="text" class="form-control" id="signupPhoneNumber"
+									placeholder="Enter phone number" name="phonenumber" required>
+							</div>
+							<div class="form-group">
+								<label for="signupEmail">Email Address</label> <input
+									type="email" class="form-control" id="signupEmail"
+									placeholder="Enter email" name="email" required>
+								<p th:text="${errorEmailExists}" class="text-danger"></p>
+							</div>
+							<div class="form-group">
+								<label for="signupPassword">Password</label> <input
+									type="password" class="form-control" id="signupPassword"
+									placeholder="Password" name="password" required> <i
+									class="toggle-password2 fa fa-eye-slash"
+									onclick="togglePasswordVisibility2()"></i>
+									<div id="passwordError" class="text-danger"></div>
+									
+							</div>
+							<button type="submit" class="btn btn-primary" onclick="return submitForm()">Register</button>
+						</form>
+						<br>
+						<div class="text-center mt-3">
+							<p>
+								Already have an account? <a id="loginLink" href="#"
+									data-dismiss="modal" data-toggle="modal"
+									data-target="#loginModal">Login here</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+		// Function to validate password length
+		function validatePasswordLength() {
+		    var password = document.getElementById("signupPassword").value;
+		    var passwordError = document.getElementById("passwordError");
+
+		    if (password.length < 8) {
+		        passwordError.textContent = "Password must be at least 8 characters long.";
+		        return false;
+		    }
+		    else if (!/[A-Z]/.test(password)) {
+		        passwordError.textContent = "Password must contain at least one uppercase letter.";
+		        return false;
+		    } 
+		    else if (!/[!@#$%^&*]/.test(password)) {
+		        passwordError.textContent = "Password must contain at least one special character (!@#$%^&*).";
+		        return false;
+		    }
+		    else {
+		        passwordError.textContent = ""; // Clear any previous error message
+		        return true;
+		    }
+		}
+
+		// Function to handle form submission
+		function submitForm() {
+		    if (!validatePasswordLength()) {
+		        // Password length validation failed, stop form submission
+		        return false;
+		    }
+		}
+
+			function togglePasswordVisibility() {
+				var passwordField = document.getElementById("loginPassword");
+				var eyeIcon = document.querySelector(".toggle-password");
+
+				if (passwordField.type === "password") {
+					passwordField.type = "text";
+					eyeIcon.classList.remove("fa-eye-slash");
+					eyeIcon.classList.add("fa-eye");
+				} else {
+					passwordField.type = "password";
+					eyeIcon.classList.remove("fa-eye");
+					eyeIcon.classList.add("fa-eye-slash");
+				}
+			}
+			
+			function togglePasswordVisibility2() {
+				var passwordField = document.getElementById("signupPassword");
+				var eyeIcon = document.querySelector(".toggle-password2");
+
+				if (passwordField.type === "password") {
+					passwordField.type = "text";
+					eyeIcon.classList.remove("fa-eye-slash");
+					eyeIcon.classList.add("fa-eye");
+				} else {
+					passwordField.type = "password";
+					eyeIcon.classList.remove("fa-eye");
+					eyeIcon.classList.add("fa-eye-slash");
+				}
+			}
+		</script>
+
+		<div class="header-bottom">
+			<!--header-bottom-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle"
+								data-toggle="collapse" data-target=".navbar-collapse">
+								<span class="sr-only">Toggle navigation</span> <span
+									class="icon-bar"></span> <span class="icon-bar"></span> <span
+									class="icon-bar"></span>
+							</button>
+						</div>
+						<div class="mainmenu pull-left">
+							<ul class="nav navbar-nav collapse navbar-collapse">
+								<li><a href="/" class="active">Home</a></li>
+								<li class="dropdown"><a href="#">Shop<i
+										class="fa fa-angle-down"></i></a>
+									<ul role="menu" class="sub-menu">
+										<li><a href="/shop">Products</a></li>
+										<li><a href="product-details.html">Product Details</a></li>
+										<li><a href="checkout.html">Checkout</a></li>
+										<li><a href="/cart">Cart</a></li>
+									</ul></li>
+								<li class="dropdown"><a href="#">Blog<i
+										class="fa fa-angle-down"></i></a>
+									<ul role="menu" class="sub-menu">
+										<li><a href="blog.html">Blog List</a></li>
+										<li><a href="blog-single.html">Blog Single</a></li>
+									</ul></li>
+								<li><a href="/404">404</a></li>
+								<li><a href="contact-us.html">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="search_box pull-right">
+							<input type="text" placeholder="Search" />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/header-bottom-->
+	</header>
+	<!--/header-->
+</div>
